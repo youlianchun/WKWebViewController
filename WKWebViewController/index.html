@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>JS交互测试 Link </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <script language="javascript" text="text/javascript">
+        function inputClick() {
+            var res = prompt('Hello', '请输入:');
+            var textValue = (res);
+            document.getElementById('returnValue').value = 'prompt ' + textValue;
+        }
+
+        function confirmClick() {
+            var res = confirm('Helloo');
+            if (res) {
+                document.getElementById('returnValue').value = 'confirm 确认';
+            } else {
+                document.getElementById('returnValue').value = 'confirm 取消';
+            }
+        }
+
+        function alertClick() {
+            var res = alert('Hello');
+            document.getElementById('returnValue').value = 'alert 确认';
+        }
+    </script>
+</head>
+
+<body>
+    <p>
+        <h1>对话框</h1>
+        <table>
+            <tr>
+                <td align="center" valign="middle"><input type="button" value="alert" onclick="alertClick()"></td>
+                <td align="center" valign="middle"><input type="button" value="confirm " onclick="confirmClick()"></td>
+                <td align="center" valign="middle"><input type="button" value="prompt" onclick="inputClick()"></td>
+                <th>结果</th>
+                <td align="center" valign="middle"> <textarea id="returnValue" type="value" rows="1" cols="15"></textarea></td>
+            </tr>
+        </table>
+        <h1>JS交互测试</h1>
+        <input type="button" value="windiw.ocModelk" onclick="window.location.href = 'ocModel.html'">
+        <input type="button" value="windiw.webKit" onclick="window.open('webKit.html')">
+        <h1>_blank链接</h1>
+        <a href="http://www.baidu.com" target="_blank">打开百度</a>
+        <h1>openURL</h1>
+        <a href="tel://17717865002">拨打电话</a>
+        <a href="sms://17717865002">发送短信</a>
+        <a href="mailto://985050633@qq.com">发送邮件</a>
+        <a href="https://itunes.apple.com/cn/app/tim/id1175213887?mt=8">itunes跳转</a>
+        <a href="app-settings:">跳转设置</a>
+        <a href="mqq://im/chat?chat_type=wpa&uin=985050622&version=1&src_type=web">跳转QQ</a>
+        <h1>选择文件</h1>
+        <input type="file" />
+        <h1>--</h1>
+        <font size="5" face="arial" color="red">测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</font>
+    </p>
+</body>
+
+</html>

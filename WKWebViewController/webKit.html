@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <title>JS交互测试webKit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <script language="javascript" text="text/javascript">
+        function resAB(res) {
+            asyncAlert(res);
+            document.getElementById('returnAB').value = res;
+        }
+
+        function appVersionRes(res) {
+            asyncAlert(res);
+            document.getElementById('appVersion').value = res;
+        }
+
+        function asyncAlert(content) {
+            setTimeout(function() {
+                alert(content);
+            }, 0.2);
+        }
+
+        window.onload = function() {
+            getAppVersionClick();
+        }
+
+        //
+        function randomTitleClick() {
+            if (window.webkit) {
+                window.webkit.messageHandlers.randomTitle.postMessage(null);
+            }
+        }
+
+        function setTitleClick() {
+            var title = document.getElementById('aTitle').value;
+            if (window.webkit) {
+                window.webkit.messageHandlers.setTitle.postMessage([title]);
+            }
+        }
+
+        function getAppVersionClick() {
+            if (window.webkit) {
+                window.webkit.messageHandlers.getAppVersion.postMessage(null);
+            }
+        }
+
+
+
+        function sumABClick() {
+            var a = document.getElementById('inputA').value;
+            var b = document.getElementById('inputB').value;
+            if (window.webkit) {
+                window.webkit.messageHandlers.sumAB.postMessage([a, b]);
+            }
+        }
+
+        function subABClick() {
+            var a = document.getElementById('inputA').value;
+            var b = document.getElementById('inputB').value;
+            if (window.webkit) {
+                window.webkit.messageHandlers.subAB.postMessage([a, b]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>标注</h1>
+    <p>
+        window.webkit.messageHandlers.<span style="color:#60D978;">函数名</span>.postMessage(<span style="color:#60D978;">参数</span>);
+    </p>
+    <p>
+        &nbsp; &nbsp;&nbsp; &nbsp; 参数格式1:&nbsp;[参数1,参数2,参数3,...]
+    </p>
+    <p>
+        &nbsp; &nbsp;&nbsp; &nbsp; 参数格式2:&nbsp;{"参数名1":参数值1,"参数名2":参数值2,"参数名3":参数值3,...}
+    </p>
+    <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;无参数时候传null
+    </div>
+    <h1>无参+无返回</h1>
+    <input type="button" value="随机标题" onclick="randomTitleClick()" />
+    <h1>有参+无返回</h1>
+    <table>
+        <tr>
+            <td align="center" valign="middle"><input type="button" value="固定标题" onclick="setTitleClick()" /></td>
+            <td align="center" valign="middle"><textarea id="aTitle" type="value" rows="1" cols="10">固定标题</textarea></td>
+        </tr>
+    </table>
+    <h1>无参+有返回</h1>
+    <table>
+        <tr>
+            <td align="center" valign="middle"><input type="button" value="获取app本号" onclick="getAppVersionClick()" /></td>
+            <td align="center" valign="middle"><textarea id="appVersion" type="value" rows="1" cols="10"></textarea></td>
+        </tr>
+    </table>
+    <h1>有参+有返回</h1>
+    <input type="button" value="求和 A+B" onclick="sumABClick()" />
+    <input type="button" value="求差 A-B" onclick="subABClick()" />
+    <table>
+        <tr>
+            <th>A</th>
+            <td><textarea id="inputA" type="value" rows="1" cols="10">10</textarea></td>
+            <th>+B</th>
+            <td><textarea id="inputB" type="value" rows="1" cols="10">2</textarea></td>
+            <th>=AB</th>
+            <td><textarea id="returnAB" type="value" rows="1" cols="10"></textarea></td>
+        </tr>
+    </table>
+    <h1>--</h1>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<html>
+
+<head>
+    <title>JS交互测试ocModel</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <script language="javascript" text="text/javascript">
+        function resAB(res) {
+            asyncAlert(res);
+            document.getElementById('returnAB').value = res;
+        }
+
+        function asyncAlert(content) {
+            setTimeout(function() {
+                alert(content);
+            }, 0.2);
+        }
+
+        window.onload = function() {
+            getAppVersionClick();
+        }
+
+        //
+        function randomTitleClick() {
+            if (window.ocModel) {
+                window.ocModel.randomTitle();
+            } else if (window.webkit) {
+                window.webkit.messageHandlers.randomTitle.postMessage(null);
+            }
+        }
+
+        function setTitleClick() {
+            var title = document.getElementById('aTitle').value;
+            if (window.ocModel) {
+                window.ocModel.setTitle([title]);
+            } else if (window.webkit) {
+                window.webkit.messageHandlers.setTitle.postMessage([title]);
+            }
+        }
+
+        function getAppVersionClick() {
+            if (window.ocModel) {
+                window.ocModel.getAppVersion(function(res) {
+                    asyncAlert(res);
+                    document.getElementById('appVersion').value = res;
+                });
+            } else if (window.webkit) {
+                window.webkit.messageHandlers.getAppVersion.postMessage(null);
+            }
+        }
+
+        function sumABClick() {
+            var a = document.getElementById('inputA').value;
+            var b = document.getElementById('inputB').value;
+            if (window.ocModel) {
+                window.ocModel.sumAB([a, b], function(res) {
+                    asyncAlert(res);
+                    document.getElementById('returnAB').value = res;
+                });
+            } else if (window.webkit) {
+                window.webkit.messageHandlers.sumAB.postMessage([a, b]);
+            }
+        }
+
+        function subABClick() {
+            var a = document.getElementById('inputA').value;
+            var b = document.getElementById('inputB').value;
+            if (window.ocModel) {
+                window.ocModel.subAB([a, b], resAB);
+            } else if (window.webkit) {
+                window.webkit.messageHandlers.subAB.postMessage([a, b]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>标注</h1>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        window.<span style="color:#60D978;">对象名</span>.<span style="color:#60D978;">函数名</span>(); &nbsp;<span style="color:#00D5FF;">//无参+无返回</span>
+    </div>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        window.<span style="color:#60D978;">对象名</span>.<span style="color:#60D978;">函数名</span>(<span style="color:#60D978;">参数</span>); <span style="color:#00D5FF;">//有参+无返回</span>
+    </div>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        window.<span style="color:#60D978;">对象名</span>.<span style="color:#60D978;">函数名</span>(function(param){}); <span style="color:#00D5FF;">//无参+有返回</span>
+    </div>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        window.<span style="color:#60D978;">对象名</span>.<span style="color:#60D978;">函数名</span>(<span style="color:#60D978;">参数</span>,&nbsp;function(param){});&nbsp;<span style="color:#00D5FF;">//有参+有返回</span>
+    </div>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        &nbsp;&nbsp;&nbsp;&nbsp;参数格式1: [参数1,参数2,参数3,...]
+    </div>
+    <div style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        &nbsp;&nbsp;&nbsp;&nbsp;参数格式2: {"参数名1":参数值1,"参数名2":参数值2,"参数名3":参数值3,...}
+    </div>
+    <p style="background-color:#FFFFFF;font-family:Menlo, Monaco, &quot;">
+        返回结果: 回调函数参数在函数参数之后，可以是<span style="color:#60D978;">一个匿名函数</span>或<span style="color:#60D978;">一个函数名</span>
+    </p>
+    <h1>无参+无返回</h1>
+    <input type="button" value="随机标题" onclick="randomTitleClick()" />
+    <h1>有参+无返回</h1>
+    <table>
+        <tr>
+            <td align="center" valign="middle"><input type="button" value="固定标题" onclick="setTitleClick()" /></td>
+            <td align="center" valign="middle"><textarea id="aTitle" type="value" rows="1" cols="10">固定标题</textarea></td>
+        </tr>
+    </table>
+    <h1>无参+有返回</h1>
+    <table>
+        <tr>
+            <td align="center" valign="middle"><input type="button" value="获取app本号" onclick="getAppVersionClick()" /></td>
+            <td align="center" valign="middle"><textarea id="appVersion" type="value" rows="1" cols="10"></textarea></td>
+        </tr>
+    </table>
+    <h1>有参+有返回</h1>
+    <input type="button" value="求和 A+B" onclick="sumABClick()" />
+    <input type="button" value="求差 A-B" onclick="subABClick()" />
+    <table>
+        <tr>
+            <th>A</th>
+            <td><textarea id="inputA" type="value" rows="1" cols="10">10</textarea></td>
+            <th>B</th>
+            <td><textarea id="inputB" type="value" rows="1" cols="10">2</textarea></td>
+            <th>=AB</th>
+            <td><textarea id="returnAB" type="value" rows="1" cols="10"></textarea></td>
+        </tr>
+    </table>
+    <h1>--</h1>
+</body>
+
+</html>
