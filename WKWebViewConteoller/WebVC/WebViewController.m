@@ -151,19 +151,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSURL*)willLoadRequestWithUrl:(NSURL *)url {
-    NSString *urlStr  = url.absoluteString;
-    if (![urlStr containsString:@"get_wp_ct"]) {
-        if ([urlStr containsString:@"from=post"]) {
-            urlStr = [NSString stringWithFormat:@"http://www.upbox.com.cn/get_wp_ct/html/?type=post&url=%@",urlStr];
-        }else if([urlStr containsString:@"from=page"]) {
-            urlStr = [NSString stringWithFormat:@"http://www.upbox.com.cn/get_wp_ct/html/?type=page&url=%@",urlStr];
-        }
-    }
-    NSURL*newUrl = [NSURL URLWithString:urlStr];
-    return newUrl;
-}
-
 
 #pragma mark - overwrite
 - (ScriptMessageManager*)scriptMessageManagerWhenWebViewInit{
