@@ -197,9 +197,9 @@
 }
 
 -(void)addJSFunctionWithName:(NSString*)name {
-    NSString *javaScriptSource = [NSString stringWithFormat:@"function js_%@Func(){\
-                                  window.webkit.messageHandlers.%@.postMessage(%@)\
-                                  }", name, name, @"params"];
+    NSString *javaScriptSource = [NSString stringWithFormat:@"function js_%@Func(param){\
+                                  window.webkit.messageHandlers.%@.postMessage(param)\
+                                  }", name, name];
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];// forMainFrameOnly:NO(全局窗口)，yes（只限主窗口）
     [self addUserScript:userScript];
 }
