@@ -1,0 +1,172 @@
+
+<html>
+    <head>
+        <title>JS交互测试</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+        <script language="javascript" text="text/javascript">
+            
+<!--            window.ocModel.     -->
+
+                function ocModelFunc0Click() {
+                    if (window.ocModel){
+                        window.ocModel.func0();
+                    }
+                }
+                
+                function ocModelFunc1Click() {
+                    if (window.ocModel){
+                        window.ocModel.func1('string');
+                    }
+                }
+                
+                function ocModelFunc2Click() {
+                    if (window.ocModel){
+                        window.ocModel.func2(function(param){
+                                             asyncAlert(param);
+                                             });
+                    }
+                }
+                
+                function ocModelFunc3Click() {
+                    if (window.ocModel){
+                        window.ocModel.func3(3, function(param){
+                                             asyncAlert(param);
+                                             });
+                    }
+                }
+                
+<!--            window.webkit.     -->
+
+                function inputClick() {
+                    var response = prompt('Hello', '请输入:');
+                    var textValue = (response);
+                    document.getElementById('returnValue').value = textValue;
+                }
+                
+                
+                function getImageClick(){
+                    window.webkit.messageHandlers.getImage.postMessage(null);
+                }
+                
+                
+                function setImageWithPath(path){
+                    if(path.length == 0) {
+                        alert('图片位空');
+                    } else {
+                        document.getElementById('imageView').src = path;
+                        <!--                alert('图片设置成功');-->
+                        location.reload();
+                    }
+                }
+                
+                function func0Click() {
+                    if (window.webkit){
+                        window.webkit.messageHandlers.func0.postMessage(null);
+                    }else if (window.ocModel){
+                        window.ocModel.func0();
+                    }else{
+                        func0();
+                    }
+                }
+                
+                function func1Click() {
+                    var a = '一个参数';
+                    if (window.webkit){
+                        window.webkit.messageHandlers.func1.postMessage(a);
+                    }else if (window.ocModel){
+                        window.ocModel.func1(a);
+                    }else{
+                        func1(a);
+                    }
+                }
+                
+                function funcNClick() {
+                    var a = {title:'字典',message:'测试内容'};
+                    var b = [255,0,155,0.5];
+                    var c = '字符串';
+                    if (window.webkit){
+                        window.webkit.messageHandlers.funcN.postMessage([a,b,c]);
+                    }else if (window.ocModel){
+                        window.ocModel.funcN(a,b,c);
+                    }else{
+                        funcN(a,b,c);
+                    }
+                }
+                
+                function sumWithABClick(){
+                    var a = document.getElementById('inputA').value;
+                    var b = document.getElementById('inputB').value;
+                    if (window.webkit){
+                        window.webkit.messageHandlers.sumWithAB.postMessage([a,b]);
+                    }else if (window.ocModel){
+                        window.ocModel.sumWithAB(a,b);
+                    }else{
+                        sumWithAB(a,b);
+                    }
+                }
+                
+                function sumWithAB_res(res){
+                    asyncAlert(res);
+                    document.getElementById('returnAB').value = res;
+                }
+                
+                function asyncAlert(content) {
+                    setTimeout(function(){
+                               alert(content);
+                               },0.2);
+                }
+        window.onload=function(){
+            ocModelFunc3Click();
+        }
+            </script>
+            </head>
+    
+    <body>
+        <h1>window.ocModel.</h1>
+        <input type="button" value="无参+无返回" onclick="ocModelFunc0Click()" />
+        <input type="button" value="有参+无返回" onclick="ocModelFunc1Click()" />
+        <input type="button" value="无参+有返回" onclick="ocModelFunc2Click()" />
+        <input type="button" value="有参+有返回" onclick="ocModelFunc3Click()" />
+
+        <h1>window.webkit.</h1>
+        <input type="button" value="点击触发JS输入方法 " onclick="inputClick()">
+<!--        <input type="button" value="获取图片 " onclick="getImageClick()">-->
+        <img src="" id="imageView" style="width: 100px; height: 100px;" onclick="getImageClick()"><!--src="图片的相对路径" 如果把html文件导入工程中，图片路径和OC一样只写图片名字和后缀就可以，（记得要先把图片添加到工程） 图片也可以实现按钮的方法getImageClick -->
+
+        <h1>无返回参数</h1>
+        <input type="button" value="无参数" onclick="func0Click()" />
+        <input type="button" value="一个参数" onclick="func1Click()" />
+        <input type="button" value="多个参数" onclick="funcNClick()" />
+        
+        <h1>返回参数</h1>
+        <input type="button" value="AB求和" onclick="sumWithABClick()" />
+        <table>
+            <tr>
+                <th>A</th>
+                <td><textarea id ="inputA" type="value" rows="1"cols="10">1</textarea></td>
+                <th>+B</th>
+                <td><textarea id ="inputB" type="value" rows="1" cols="10">2</textarea></td>
+                <th>=AB</th>
+                <td><textarea id ="returnAB" type="value" rows="1" cols="10"></textarea></td>
+            </tr>
+        </table>
+        
+        <h1>打开_blank链接</h1>
+        <a href="http://www.baidu.com" target="_blank">baidu</a>
+        <h1>openURL</h1>
+        <a href="tel://17717865002">拨打电话</a>
+        <a href="sms://17717865002">发送短信</a>
+        <a href="mailto://985050633@qq.com">发送邮件</a>
+        <a href="https://itunes.apple.com/cn/app/tim/id1175213887?mt=8">itunes跳转</a>
+        <a href="app-settings:">跳转设置</a>
+        <a href="mqq://im/chat?chat_type=wpa&uin=985050622&version=1&src_type=web">跳转QQ</a>
+        
+        <h1>选择文件</h1>
+        <input type="file" />
+        
+        <h1>回调结果</h1>
+        <textarea id ="returnValue" type="value" rows="5" cols="40"></textarea>
+        
+        <p><font size="5" face="arial" color="red">测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</font></p>
+    </body>
+</html>
