@@ -119,7 +119,7 @@
             break;
         case WebToolType_f_Copy:{
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = self.webView.URL.absoluteString;
+            pasteboard.string = self.currentURL.absoluteString;
         }
             break;
         default:

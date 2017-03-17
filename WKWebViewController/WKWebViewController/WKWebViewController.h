@@ -14,7 +14,7 @@
 
 @property (nonatomic, readonly) WKWebView *webView;
 @property (nonatomic, readonly) WebBarView *barView;
-
+@property (nonatomic, readonly) NSURL *currentURL;
 @property (nonatomic, readonly) BOOL canGoBack;
 @property (nonatomic, readonly) BOOL canGoForward;
 

@@ -115,6 +115,16 @@
 //    return _activityView;
 //}
 
+-(NSURL *)currentURL {
+    NSURL *url;
+    if (self.webView.URL) {
+        url = self.webView.URL;
+    }else{
+        url = self.url;
+    }
+    return url;
+}
+
 -(WKPreferences *)preferences {
     return self.webView.configuration.preferences;
 }
@@ -399,7 +409,11 @@
 }
 
 - (void)reload {
-    [self.webView reload];
+    if (self.webView.URL) {
+        [self.webView reload];
+    }else{
+        [self.webView loadRequest:self.urlRequest];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
