@@ -26,7 +26,7 @@ struct objcClass {
 
     NSString *urlStr = [[NSBundle mainBundle] pathForResource:@"index.html" ofType:nil];
     self.textView.text = urlStr;
-    self.textView.text = @"https://youlianchun.github.io/HtmlFile/JSOC/index.html";
+//    self.textView.text = @"https://youlianchun.github.io/HtmlFile/JSOC/index.html";
 //    self.textView.text = @"https://www.baidu.com";
 //    self.textView.text = @"https://dev.upbox.com.cn:3443/upboxApi/match_getRecommendMatch.do";
 // Do any additional setup after loading the view, typically from a nib.
