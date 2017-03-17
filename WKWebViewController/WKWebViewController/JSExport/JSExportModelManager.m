@@ -95,7 +95,8 @@
 }
 
 - (void)addScriptMessageHandlerModel:(JSExportModel<JSExportProtocol>*)handler {
-    if ([handler.spaceName stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0) {
+    if (![handler conformsToProtocol:@protocol(JSExportProtocol)]) {
+        NSAssert(false, @"%@未实现JSExportProtocol子协议", NSStringFromClass([handler class]));
         return;
     }
     if (!self.jsExportModelManager) {

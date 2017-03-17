@@ -57,9 +57,41 @@
 
 @end
 
+typedef NS_ENUM(NSUInteger, _JSExportMethodType) {
+    param0_return0 = 0x100,
+    param0_return1 = 0x101,
+    param1_return0 = 0x110,
+    param1_return1 = 0x111
+};
+@interface _JSExportMethod : NSObject
+@property (nonatomic) SEL sel;
+@property (nonatomic) NSString *selName;
+@property (nonatomic) NSString *selKey;
+@property (nonatomic) NSString *selTypes;
+@property (nonatomic) _JSExportMethodType methodType;
+@end
+@implementation _JSExportMethod
+-(void)setSelTypes:(NSString *)selTypes {
+    _selTypes = selTypes;
+    if ([selTypes hasSuffix:@"@0:8"]) {//无参数,无返回值
+        _methodType = param0_return0;
+    }else{//有参数
+        if ([selTypes containsString:@"@0:8@?"]) {//无参数，有返回值
+            _methodType = param0_return1;
+        }else{
+            if ([selTypes containsString:@"@?"]) {//有参数有返回值
+                _methodType = param1_return1;
+            }else{//有参数，无返回值
+                _methodType = param1_return0;
+            }
+        }
+    }
+}
+@end
+
 @interface JSExportModel ()
 @property (nonatomic, copy) NSString* spaceName;
-@property (nonatomic) NSDictionary *methodDict;
+@property (nonatomic) NSDictionary <NSString*,_JSExportMethod*>*methodDict;
 @property (nonatomic, weak) WKWebView *webView;
 @end
 
@@ -78,7 +110,7 @@
 }
 
 +(NSArray*)jsExportMethodsWithModel:(JSExportModel<JSExportProtocol>*)model {
-    Protocol *jsProtocol = objc_getProtocol("JSExportProtocol");
+    Protocol *jsProtocol = @protocol(JSExportProtocol);
     Class cls = [model class];
     if (class_conformsToProtocol(cls,jsProtocol)){
         unsigned int listCount = 0;
@@ -99,7 +131,11 @@
             NSString *selName = NSStringFromSelector(sel);
             NSString *selKey = [selName componentsSeparatedByString:@":"][0];
             NSString *selTypes = [NSString stringWithUTF8String:type];
-            NSDictionary *method = @{@"key":selKey,@"name":selName,@"types":selTypes};
+            _JSExportMethod *method = [[_JSExportMethod alloc] init];
+            method.sel = sel;
+            method.selTypes = selTypes;
+            method.selName  = selName;
+            method.selKey = selKey;
             methodArray[i] = method;
         }
         free(methodList);
@@ -108,6 +144,7 @@
         return nil;
     }
 }
+
 +(NSString*)jsExportCallBackCode {
     NSMutableString *jsExportModelString = [[NSMutableString alloc] init];
     [jsExportModelString appendString:@"var _JSExportModel_callBackHandlers = {};\n"];
@@ -133,38 +170,40 @@
     NSMutableArray *jsFunctionNameArray = [NSMutableArray array];
     NSMutableArray *jsFunctionBodyArray = [NSMutableArray array];
     NSMutableDictionary *methodDict = [NSMutableDictionary dictionary];
-    for (NSDictionary *method in methods) {
-        NSString* name = method[@"key"];
+    for (_JSExportMethod *method in methods) {
+        NSString* name = method.selKey;
         NSString* key = [NSString stringWithFormat:@"%@_%@", model.spaceName, name];
         methodDict[key] = method;
-        NSString* types = method[@"types"];
         NSString *jsFunctionBody;
-        if ([types hasSuffix:@"@0:8"]) {//无参数,无返回值
-            NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
-                              var key = '%@';\n\
-                              window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key});\n",model.spaceName, key, [self kJSExportModelKey]];
-            jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (){\n%@\n}", key, body];
-        }else{//有参数
-            if ([types containsString:@"@0:8@?"]) {//无参数，有返回值
+        switch (method.methodType) {
+            case param0_return0:{
+                NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
+                                  var key = '%@';\n\
+                                  window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key});\n",model.spaceName, key, [self kJSExportModelKey]];
+                jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (){\n%@\n}", key, body];
+            }break;
+            case param0_return1:{
                 NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
                                   var key = '%@';\n\
                                   _JSExportModel_holdCallBack(key, callBack);\n\
                                   window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key});\n",model.spaceName, key, [self kJSExportModelKey]];
                 jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (callBack){\n%@\n}", key, body];
-            }else{
-                if ([types containsString:@"@?"]) {//有参数有返回值
-                    NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
-                                      var key = '%@';\n\
-                                      _JSExportModel_holdCallBack(key, callBack);\n\
-                                      window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key,'param':param});\n",model.spaceName, key, [self kJSExportModelKey]];
-                    jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (param, callBack){\n%@\n}", key, body];
-                }else{//有参数，无返回值
-                    NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
-                                      var key = '%@';\n\
-                                      window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key,'param':param});\n",model.spaceName, key, [self kJSExportModelKey]];
-                    jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (param){\n%@\n}", key, body];
-                }
-            }
+            }break;
+            case param1_return0:{
+                NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
+                                  var key = '%@';\n\
+                                  window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key,'param':param});\n",model.spaceName, key, [self kJSExportModelKey]];
+                jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (param){\n%@\n}", key, body];
+            }break;
+            case param1_return1:{
+                NSString *body = [NSString stringWithFormat:@"var spaceName = '%@';\n\
+                                  var key = '%@';\n\
+                                  _JSExportModel_holdCallBack(key, callBack);\n\
+                                  window.webkit.messageHandlers.%@.postMessage({'spaceName':spaceName,'key':key,'param':param});\n",model.spaceName, key, [self kJSExportModelKey]];
+                jsFunctionBody = [NSString stringWithFormat:@"function _JSExportModel_%@ (param, callBack){\n%@\n}", key, body];
+            }break;
+            default:
+                break;
         }
         [jsFunctionNameArray addObject:[NSString stringWithFormat:@"%@ : _JSExportModel_%@ ", name, key]];
         [jsFunctionBodyArray addObject:jsFunctionBody];
@@ -176,7 +215,6 @@
     NSString * jsFunctionName = [jsFunctionNameArray componentsJoinedByString:@",\n"];
     [jsExportModelString appendString:jsFunctionName];
     [jsExportModelString appendString:@"\n}\n\n"];
-    
     
     NSString * jsFunctionBody = [jsFunctionBodyArray componentsJoinedByString:@"\n\n"];
     [jsExportModelString appendString:jsFunctionBody];
@@ -190,13 +228,11 @@
     NSString* key = dict[@"key"];
     JSExportModel *model = scriptModelDict[spaceName];
     NSDictionary *methodDict = model.methodDict;
-    NSString *selName = methodDict[key][@"name"];
-    NSString *types = methodDict[key][@"types"];
-    SEL sel = NSSelectorFromString(selName);
-    JSExportCallBack callBack;
+    _JSExportMethod *method = methodDict[key];
+    SEL sel = method.sel;
     __weak WKWebView *webView = message.webView;
-    model.webView = webView;
-    if ([types containsString:@"@?"]) {
+    JSExportCallBack callBack;
+    if (method.methodType & 1) {
         callBack = ^(id param){
             NSDictionary *dict = @{@"key":key,@"param":param};
             [webView callJSFunc:@"_JSExportModel_callBack" arguments:@[dict]];
@@ -205,22 +241,27 @@
     if ([model respondsToSelector:sel]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        if ([types hasSuffix:@"@0:8"]) {//无参数,无返回值
-            [model performSelector:sel];
-        }else{//有参数
-            if ([types containsString:@"@0:8@?"]) {//无参数，有返回值
+        switch (method.methodType) {
+            case param0_return0:{
+                [model performSelector:sel];
+            }break;
+            case param0_return1:{
                 [model performSelector:sel withObject:callBack];
-            }else{
-                if ([types containsString:@"@?"]) {//有参数有返回值
-                    [model performSelector:sel withObject:param withObject:callBack];
-                }else{//有参数，无返回值
-                    [model performSelector:sel withObject:param];
-                }
-            }
+            }break;
+            case param1_return0:{
+                [model performSelector:sel withObject:param];
+            }break;
+            case param1_return1:{
+                [model performSelector:sel withObject:param withObject:callBack];
+            }break;
+            default:
+                break;
         }
 #pragma clang diagnostic pop
     }
 }
+
+
 
 +(NSString*)kJSExportModelKey{
     static NSString* kJSExportModel = @"_JSExportModel_";
