@@ -21,6 +21,7 @@
 @property(nonatomic,strong)NSMutableArray * leftItems;
 
 @property(nonatomic,strong)NSMutableArray * rightItems;
+@property (nonatomic, strong) NSString *filePath;
 
 @end
 
@@ -99,11 +100,20 @@
     }];
 }
 
+- (NSString *)filePath {
+    if (!_filePath) {
+        _filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *folderName = [_filePath stringByAppendingPathComponent:@"MergeAudio"];
+        BOOL isCreateSuccess = [[NSFileManager defaultManager] createDirectoryAtPath:folderName withIntermediateDirectories:YES attributes:nil error:nil];
+        if (isCreateSuccess) _filePath = [folderName stringByAppendingPathComponent:@"xindong.m4a"];
+    }
+    return _filePath;
+}
 #pragma mark - WebToolViewControllerAction
 -(void)toolAction:(WebToolType)type {
     switch (type) {
         case WebToolType_s_WX:
-            
+
             break;
         case WebToolType_s_PYQ:
             
@@ -208,6 +218,10 @@
     }else{
         [self hiddenCloseItem];
     }
+}
+
+-(void)didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    
 }
 
 @end

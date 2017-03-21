@@ -10,6 +10,7 @@
 #import "WebProcessPlant.h"
 #import "WKWebView+EvaluatingJavaScript.h"
 #import "JSExport.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define kWebViewEstimatedProgress @"estimatedProgress"
 #define kWebViewCanGoBack @"canGoBack"
@@ -26,6 +27,7 @@
 @property (nonatomic, retain) UIProgressView * progressView;
 @property (nonatomic, assign) BOOL isVisible;
 @property (nonatomic, assign) BOOL observerEnabled;
+@property (nonatomic, strong) AVAudioPlayer *player;
 
 @end
 
@@ -123,6 +125,17 @@
         url = self.url;
     }
     return url;
+}
+
+-(AVAudioPlayer *)player {
+    static AVAudioPlayer* kPlayer;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"empty.mp3" ofType:nil];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        kPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    });
+    return kPlayer;
 }
 
 -(WKPreferences *)preferences {
@@ -250,7 +263,12 @@
     NSString *str = [url.absoluteString lowercaseString];
     BOOL loactionUrl = [str hasPrefix:@"/"] || [str hasPrefix:@"file://"];
     if (loactionUrl) {
-        [self.webView loadFileURL:url allowingReadAccessToURL:url];
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
+            [self.webView loadFileURL:url allowingReadAccessToURL:url];
+        }else{
+            NSURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+            [self.webView loadRequest:request];
+        }
     }else{
         [self loadRequestWithUrl:url];
     }
@@ -344,6 +362,7 @@
 }
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    [self pausePlayer];
     NSURL *url = navigationAction.request.URL;
     UIApplication *app = [UIApplication sharedApplication];
     if([[WKWebViewController infoOpenURLs] containsObject:url.scheme]) {
@@ -394,6 +413,10 @@
 
 
 #pragma mark -
+-(void)pausePlayer{
+    [self.player play];
+}
+
 - (BOOL)goBack {
     if ([self.webView canGoBack]) {
         [self.webView goBack];//-[WKWebView goBack], 回退到上一个页面后不会触发window.onload()函数、不会执行JS。
@@ -442,6 +465,7 @@
     if (self.navigationController) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
+    [self pausePlayer];
 }
 
 @end

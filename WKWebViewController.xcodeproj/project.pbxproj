@@ -38,6 +38,7 @@
 		A93FD7131E7AA68800C66C2F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7101E7AA68800C66C2F /* index.html */; };
 		A93FD7141E7AA68800C66C2F /* ocModel.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7111E7AA68800C66C2F /* ocModel.html */; };
 		A93FD7151E7AA68800C66C2F /* webKit.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7121E7AA68800C66C2F /* webKit.html */; };
+		A940110A1E8142D3007597A8 /* empty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A94011091E8142D3007597A8 /* empty.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		A93FD7101E7AA68800C66C2F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A93FD7111E7AA68800C66C2F /* ocModel.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ocModel.html; sourceTree = "<group>"; };
 		A93FD7121E7AA68800C66C2F /* webKit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = webKit.html; sourceTree = "<group>"; };
+		A94011091E8142D3007597A8 /* empty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = empty.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +238,7 @@
 				A93FD6F51E7AA4B800C66C2F /* ScriptMessageManager.m */,
 				A93FD6F61E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.h */,
 				A93FD6F71E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.m */,
+				A94011091E8142D3007597A8 /* empty.mp3 */,
 				A93FD6F81E7AA4B800C66C2F /* WKWebViewController.h */,
 				A93FD6F91E7AA4B800C66C2F /* WKWebViewController.m */,
 			);
@@ -344,6 +347,7 @@
 				A93FD7131E7AA68800C66C2F /* index.html in Resources */,
 				A93FD6B91E7AA44E00C66C2F /* Assets.xcassets in Resources */,
 				A93FD7151E7AA68800C66C2F /* webKit.html in Resources */,
+				A940110A1E8142D3007597A8 /* empty.mp3 in Resources */,
 				A93FD6B71E7AA44E00C66C2F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
