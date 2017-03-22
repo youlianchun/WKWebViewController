@@ -10,7 +10,7 @@
 #import "WebProcessPlant.h"
 #import "WKWebView+EvaluatingJavaScript.h"
 #import "JSExport.h"
-#import <AVFoundation/AVFoundation.h>
+#import "PlayerPause.h"
 
 #define kWebViewEstimatedProgress @"estimatedProgress"
 #define kWebViewCanGoBack @"canGoBack"
@@ -27,7 +27,6 @@
 @property (nonatomic, retain) UIProgressView * progressView;
 @property (nonatomic, assign) BOOL isVisible;
 @property (nonatomic, assign) BOOL observerEnabled;
-@property (nonatomic, strong) AVAudioPlayer *player;
 
 @end
 
@@ -127,16 +126,6 @@
     return url;
 }
 
--(AVAudioPlayer *)player {
-    static AVAudioPlayer* kPlayer;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"empty.mp3" ofType:nil];
-        NSURL *url = [NSURL fileURLWithPath:path];
-        kPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    });
-    return kPlayer;
-}
 
 -(WKPreferences *)preferences {
     return self.webView.configuration.preferences;
@@ -236,6 +225,17 @@
     self.webView.backgroundColor = [UIColor whiteColor];
     self.progressView.hidden = YES;
     self.observerEnabled = YES;
+    [[NSNotificationCenter defaultCenter] addObserverForName:nil
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification* notification) {
+                                                      
+                                                      if ([notification.name isEqualToString:@"AVSystemController_NowPlayingAppIsPlayingDidChangeNotification"]) {
+                                                          NSLog(@"name: %@\n",
+                                                                notification);
+                                                      }
+                                                  }];
+
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
@@ -362,7 +362,7 @@
 }
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    [self pausePlayer];
+    //[self pausePlayer];
     NSURL *url = navigationAction.request.URL;
     UIApplication *app = [UIApplication sharedApplication];
     if([[WKWebViewController infoOpenURLs] containsObject:url.scheme]) {
@@ -414,7 +414,7 @@
 
 #pragma mark -
 -(void)pausePlayer{
-    [self.player play];
+    pauseAllPlayer();
 }
 
 - (BOOL)goBack {
@@ -465,7 +465,7 @@
     if (self.navigationController) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
-    [self pausePlayer];
+    //[self pausePlayer];
 }
 
 @end

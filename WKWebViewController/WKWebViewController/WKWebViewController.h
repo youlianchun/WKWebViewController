@@ -40,6 +40,7 @@
 
 -(instancetype)init NS_UNAVAILABLE;
 
+-(void)pausePlayer;
 - (void)loadData;
 - (BOOL)goBack;
 - (BOOL)goForward;

@@ -95,6 +95,8 @@
 }
 
 - (void)tool:(UIBarButtonItem *)sender{
+    [self pausePlayer];
+    return;
     [WebToolViewController showWithSelectedCallBack:^(WebToolType type) {
         [self toolAction:type];
     }];
