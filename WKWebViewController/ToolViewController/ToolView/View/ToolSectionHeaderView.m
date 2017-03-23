@@ -33,8 +33,8 @@
         _textLabel.textColor = [UIColor colorWithWhite:50/255.0 alpha:1];
         _lLineView = [[UIView alloc] init];
         _rLineView = [[UIView alloc] init];
-        _lLineView.backgroundColor = [UIColor colorWithWhite:220/255.0 alpha:1];
-        _rLineView.backgroundColor = _lLineView.backgroundColor;
+        _lLineView.backgroundColor = self.lineColor;
+        _rLineView.backgroundColor = self.lineColor;
         [self.contentView addSubview:_lLineView];
         [self.contentView addSubview:_rLineView];
         [self.contentView addSubview:_textLabel];
@@ -56,6 +56,13 @@
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_rLineView attribute:NSLayoutAttributeTop multiplier:1 constant:-25]];
     }
     return _textLabel;
+}
+
+-(UIColor *)lineColor {
+    if (!_lineColor) {
+        _lineColor = [UIColor colorWithWhite:220/255.0 alpha:1];
+    }
+    return _lineColor;
 }
 
 +(CGFloat)height {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ToolSectionHeaderView : UITableViewHeaderFooterView
+@property(nonatomic,assign)UIColor *lineColor;
 +(CGFloat)height;//继承后需要重写
 +(NSString*)identifier;//继承后需要重写
 @end
