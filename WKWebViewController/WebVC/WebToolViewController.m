@@ -49,7 +49,8 @@
         [self doCallBack:WebToolType_f_Copy];
     }];
     ToolSectionItem * functionSectionItem = [[ToolSectionItem alloc] init];
-    functionSectionItem.title = @"功能";
+    functionSectionItem.title = @" 功能 ";
+    functionSectionItem.alignmentCenter = YES;
     functionSectionItem.items = @[refreshItem,copyItem];
     
     NSArray<ToolSectionItem *> *sections = @[shareSectionItem,functionSectionItem];

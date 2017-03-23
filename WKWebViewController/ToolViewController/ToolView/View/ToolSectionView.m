@@ -101,9 +101,16 @@ static NSUInteger kDisplatItemCount = 4;
 
 #pragma mark-
 -(void)setSectionItem:(ToolSectionItem*)sectionItem didSelectItem:(void(^)(NSUInteger index)) action{
-    self.sectionItem = sectionItem;
-    self.didSelectItemAction = action;
-    [self.sectionCollectionView reloadData];
+    if (sectionItem != self.sectionItem) {
+        self.sectionItem = sectionItem;
+        if (sectionItem.alignmentCenter) {
+            NSUInteger displatItemCount = MIN(kDisplatItemCount, sectionItem.items.count);
+            self.offset = ([UIScreen mainScreen].bounds.size.width - displatItemCount*self.size.minWidth)/(2*(displatItemCount+1));
+            self.itemSize = CGSizeMake(self.offset+self.offset+self.size.minWidth, self.size.maxHeight);
+        }
+        self.didSelectItemAction = action;
+        [self.sectionCollectionView reloadData];
+    }
 }
 
 @end
