@@ -139,8 +139,6 @@ BOOL fix_secureTextEntryIMP(id sender, SEL cmd) {
                                     }\
                                     document.body.appendChild(form);\
                                     form.submit();", url, params];
-        //        __block id result = nil;
-        //        __block BOOL isExecuted = NO;
         __weak typeof(self) wself = self;
         [self evaluateJavaScript:postJavaScript completionHandler:^(id object, NSError * _Nullable error) {
             if (error && [wself.navigationDelegate respondsToSelector:@selector(webView:didFailProvisionalNavigation:withError:)]) {
@@ -148,12 +146,7 @@ BOOL fix_secureTextEntryIMP(id sender, SEL cmd) {
                     [wself.navigationDelegate webView:wself didFailProvisionalNavigation:nil withError:error];
                 });
             }
-            //            result = object;
-            //            isExecuted = YES;
         }];
-        //        while (isExecuted == NO) {
-        //            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-        //        }
         return nil;
     }else{
         return [self fix_loadRequest:request];

@@ -11,6 +11,7 @@
 #import "WKWebView+EvaluatingJavaScript.h"
 #import "JSExport.h"
 #import "PlayerPause.h"
+#import "UIViewController+FullScreen.h"
 
 #define kWebViewEstimatedProgress @"estimatedProgress"
 #define kWebViewCanGoBack @"canGoBack"
@@ -338,6 +339,7 @@
     if (webView.title.length > 0) {
         self.title = webView.title;
     }
+    self.backPanEnabled = !self.webView.canGoBack;
     self.progressView.hidden = YES;
     [self didFinishNavigation:navigation];
 }
@@ -362,7 +364,7 @@
 }
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    //[self pausePlayer];
+    [self pausePlayer];
     NSURL *url = navigationAction.request.URL;
     UIApplication *app = [UIApplication sharedApplication];
     if([[WKWebViewController infoOpenURLs] containsObject:url.scheme]) {
@@ -455,17 +457,11 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    if (self.navigationController) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = (id <UIGestureRecognizerDelegate>)self;
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    if (self.navigationController) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
-    //[self pausePlayer];
+    [self pausePlayer];
 }
 
 @end

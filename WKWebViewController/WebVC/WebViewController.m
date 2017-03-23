@@ -36,7 +36,7 @@
 
 - (UIBarButtonItem *)backItem{
     if (!_backItem) {
-        _backItem = [[UIBarButtonItem alloc] initBackItemWithTitle:@"返回" target:self action:@selector(back:)];
+        _backItem = [[UIBarButtonItem alloc] initBackItemWithTitle:@"返回"];
     }
     return _backItem;
 }
@@ -95,8 +95,6 @@
 }
 
 - (void)tool:(UIBarButtonItem *)sender{
-    [self pausePlayer];
-    return;
     [WebToolViewController showWithSelectedCallBack:^(WebToolType type) {
         [self toolAction:type];
     }];
@@ -225,5 +223,4 @@
 -(void)didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     
 }
-
 @end

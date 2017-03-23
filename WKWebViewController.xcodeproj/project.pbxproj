@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A91139FE1E83A2590070BC07 /* UIViewController+FullScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = A91139FD1E83A2590070BC07 /* UIViewController+FullScreen.m */; };
 		A93FD6AE1E7AA44E00C66C2F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6AD1E7AA44E00C66C2F /* main.m */; };
 		A93FD6B11E7AA44E00C66C2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6B01E7AA44E00C66C2F /* AppDelegate.m */; };
 		A93FD6B41E7AA44E00C66C2F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6B31E7AA44E00C66C2F /* ViewController.m */; };
@@ -42,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A91139FC1E83A2590070BC07 /* UIViewController+FullScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FullScreen.h"; sourceTree = "<group>"; };
+		A91139FD1E83A2590070BC07 /* UIViewController+FullScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FullScreen.m"; sourceTree = "<group>"; };
 		A93FD6A91E7AA44E00C66C2F /* WKWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93FD6AD1E7AA44E00C66C2F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A93FD6AF1E7AA44E00C66C2F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -115,6 +118,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A91139FB1E83A2590070BC07 /* ViewControllerFullScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A91139FC1E83A2590070BC07 /* UIViewController+FullScreen.h */,
+				A91139FD1E83A2590070BC07 /* UIViewController+FullScreen.m */,
+			);
+			path = ViewControllerFullScreen;
+			sourceTree = "<group>";
+		};
 		A93FD6A01E7AA44E00C66C2F = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +146,7 @@
 		A93FD6AB1E7AA44E00C66C2F /* WKWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A91139FB1E83A2590070BC07 /* ViewControllerFullScreen */,
 				A93FD6C31E7AA4B800C66C2F /* Category */,
 				A93FD6C61E7AA4B800C66C2F /* ToolViewController */,
 				A93FD6D81E7AA4B800C66C2F /* WebVC */,
@@ -369,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93FD6B41E7AA44E00C66C2F /* ViewController.m in Sources */,
+				A91139FE1E83A2590070BC07 /* UIViewController+FullScreen.m in Sources */,
 				A93FD7041E7AA4B800C66C2F /* WebViewController.m in Sources */,
 				A93FD6B11E7AA44E00C66C2F /* AppDelegate.m in Sources */,
 				A93FD7011E7AA4B800C66C2F /* ToolViewController.m in Sources */,

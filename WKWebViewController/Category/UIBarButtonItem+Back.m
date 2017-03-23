@@ -10,6 +10,7 @@
 static NSUInteger kBarBackButtonOffset = 11;
 
 @interface BarBackButton : UIButton
+@property (nonatomic, weak) UINavigationController *nvc;
 @end
 @implementation BarBackButton
 
@@ -32,6 +33,10 @@ static NSUInteger kBarBackButtonOffset = 11;
     return button;
 }
 
+- (void)pop {
+    [self.nvc popViewControllerAnimated:YES];
+}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
     CGFloat w = self.frame.size.width-kBarBackButtonOffset;
@@ -47,11 +52,29 @@ static NSUInteger kBarBackButtonOffset = 11;
         tintColor = self.superview.tintColor;
     }
     self.tintColor = tintColor;
+    
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder* nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UINavigationController class]]) {
+            self.nvc = (UINavigationController*)nextResponder;
+            break;
+        }
+    }
 }
 
 @end
 
 @implementation UIBarButtonItem(Back)
+
+-(UIBarButtonItem*)initBackItemWithTitle:(NSString *)title {
+    BarBackButton *backButton = [BarBackButton buttonWithImage:[self backImage] title:title target:self action:@selector(back:)];
+    self = [self initWithCustomView:backButton];
+    return self;
+}
+
+- (void)back:(BarBackButton*)sender {
+    [sender pop];
+}
 
 -(UIBarButtonItem*)initBackItemWithTitle:(NSString *)title target:(id)target action:(SEL)action {
     BarBackButton *backButton = [BarBackButton buttonWithImage:[self backImage] title:title target:target action:action];
