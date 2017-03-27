@@ -39,6 +39,7 @@
 		A93FD7131E7AA68800C66C2F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7101E7AA68800C66C2F /* index.html */; };
 		A93FD7141E7AA68800C66C2F /* ocModel.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7111E7AA68800C66C2F /* ocModel.html */; };
 		A93FD7151E7AA68800C66C2F /* webKit.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7121E7AA68800C66C2F /* webKit.html */; };
+		A9DBAA8D1E88B4F6005C8D7D /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = A9DBAA8C1E88B4F6005C8D7D /* back.png */; };
 		A9FDFF1B1E8221FA00526A22 /* PlayerPause.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		A93FD7101E7AA68800C66C2F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A93FD7111E7AA68800C66C2F /* ocModel.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ocModel.html; sourceTree = "<group>"; };
 		A93FD7121E7AA68800C66C2F /* webKit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = webKit.html; sourceTree = "<group>"; };
+		A9DBAA8C1E88B4F6005C8D7D /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		A9FDFF191E8221FA00526A22 /* PlayerPause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPause.h; sourceTree = "<group>"; };
 		A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPause.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +157,7 @@
 				A93FD6B01E7AA44E00C66C2F /* AppDelegate.m */,
 				A93FD6B21E7AA44E00C66C2F /* ViewController.h */,
 				A93FD6B31E7AA44E00C66C2F /* ViewController.m */,
+				A9DBAA8C1E88B4F6005C8D7D /* back.png */,
 				A93FD6B51E7AA44E00C66C2F /* Main.storyboard */,
 				A93FD6B81E7AA44E00C66C2F /* Assets.xcassets */,
 				A93FD6BA1E7AA44E00C66C2F /* LaunchScreen.storyboard */,
@@ -366,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93FD7141E7AA68800C66C2F /* ocModel.html in Resources */,
+				A9DBAA8D1E88B4F6005C8D7D /* back.png in Resources */,
 				A93FD6BC1E7AA44E00C66C2F /* LaunchScreen.storyboard in Resources */,
 				A93FD7131E7AA68800C66C2F /* index.html in Resources */,
 				A93FD6B91E7AA44E00C66C2F /* Assets.xcassets in Resources */,

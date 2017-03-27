@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface EvaluatingJavaScript : NSObject
++(NSString*)argumentsJS:(NSArray*)arguments;
 +(NSString*)argumentsJSON:(NSArray*)arguments;
 @end

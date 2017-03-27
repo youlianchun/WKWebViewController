@@ -9,6 +9,10 @@
             document.getElementById('returnAB').value = res;
         }
 
+        function resImage(path) {
+            asyncAlert(path);
+            document.getElementById('imge').src = path;
+        }
         function appVersionRes(res) {
             asyncAlert(res);
             document.getElementById('appVersion').value = res;
@@ -61,6 +65,11 @@
                 window.webkit.messageHandlers.subAB.postMessage([a, b]);
             }
         }
+        function getImageClick() {
+            if (window.webkit) {
+                window.webkit.messageHandlers.getImage.postMessage(null);
+            }
+        }
     </script>
 </head>
 
@@ -107,6 +116,8 @@
             <td><textarea id="returnAB" type="value" rows="1" cols="10"></textarea></td>
         </tr>
     </table>
+    <h1>选择图片</h1>
+    <img src='' width = '100px' height = '100px' onclick="getImageClick()"  id='imge'/>
     <h1>--</h1>
 </body>
 

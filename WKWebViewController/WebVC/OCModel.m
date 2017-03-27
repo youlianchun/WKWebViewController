@@ -44,4 +44,9 @@
     cb(@(sub));
 }
 
+-(void)getImage:(JSExportCallBack)cb {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"back.png" ofType:nil];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    cb(url.absoluteString);
+}
 @end

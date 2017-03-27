@@ -198,6 +198,12 @@
         return @(sub);
     }];
     
+    [smm addScriptMessageHandlerForName:@"getImage" returnName:@"resImage" handler:^id(id params) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"back.png" ofType:nil];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        return url.absoluteString;
+    }];
+    
     [smm addAdjustScreenSizeAndZooming:NO];
     OCModel *ocModel = [[OCModel alloc] initWithSpaceName:@"ocModel"];
     ocModel.vc = self;

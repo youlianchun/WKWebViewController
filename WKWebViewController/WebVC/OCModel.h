@@ -17,6 +17,9 @@
 -(void)sumAB:(id)params cb:(JSExportCallBack)cb;
 -(void)subAB:(id)params cb:(JSExportCallBack)cb;
 
+-(void)getImage:(JSExportCallBack)cb;
+
+
 @end
 
 @interface OCModel : JSExportModel <OCModelProtocol>
