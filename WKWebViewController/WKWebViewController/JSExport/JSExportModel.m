@@ -227,6 +227,7 @@ typedef NS_ENUM(NSUInteger, _JSExportMethodType) {
     id param = dict[@"param"];
     NSString* key = dict[@"key"];
     JSExportModel *model = scriptModelDict[spaceName];
+    model.webView = message.webView;
     NSDictionary *methodDict = model.methodDict;
     _JSExportMethod *method = methodDict[key];
     SEL sel = method.sel;
