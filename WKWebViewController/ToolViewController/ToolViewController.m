@@ -18,13 +18,16 @@
 @implementation ToolViewController
 
 +(ToolViewController*)showWithAnimated: (BOOL)flag completion:(void (^)(void))completion {
-    ToolViewController *vc = [[self alloc] init];
-    if (vc.toolPanelView.sections.count == 0) {
-        return nil;
-    }
-    vc.showCompletion = completion;
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:vc animated:NO completion:nil];
+    ToolViewController *vc = [[ToolViewController alloc] init];
+    [vc showWithAnimated:YES completion:nil];
     return vc;
+}
+-(void)showWithAnimated: (BOOL)flag completion:(void (^)(void))completion {
+    if (self.toolPanelView.sections.count == 0) {
+        return ;
+    }
+    self.showCompletion = completion;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:self animated:NO completion:nil];
 }
 
 -(instancetype)init {

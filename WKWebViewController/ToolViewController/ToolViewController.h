@@ -17,7 +17,10 @@
 
 @interface ToolViewController : UIViewController
 @property (nonatomic, readonly) UIView* backgroundView;
+
 +(instancetype)showWithAnimated: (BOOL)flag completion:(void (^)(void))completion;
+
+-(void)showWithAnimated: (BOOL)flag completion:(void (^)(void))completion;
 
 -(void)hidenWithAnimated: (BOOL)flag completion:(void (^)(void))completio;
 
@@ -27,21 +30,21 @@
 
 /**
  子类实现，设置自定义按钮类（可选实现）
-
+ 
  @return ToolItemView 子类
  */
 -(Class)ToolItemViewClass;
 
 /**
  子类实现，设置自定义组标题类（可选实现）
-
+ 
  @return ToolSectionHeaderView 子类
  */
 -(Class)ToolSectionHeaderViewClass;
 
 /**
  子类实现，设置toolItemSections，不可单独调用（必须实现）
-
+ 
  @return 为空时候不会显示
  */
 -(NSArray<ToolSectionItem *> *)toolItemSections;
@@ -49,7 +52,7 @@
 /**
  
  隐藏窗口调用
-
+ 
  @param flag 是否点击背景
  */
 -(void)hidenByBackgroundTouch:(BOOL)flag;
