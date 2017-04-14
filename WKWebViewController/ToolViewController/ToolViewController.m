@@ -18,7 +18,7 @@
 @implementation ToolViewController
 
 +(ToolViewController*)showWithAnimated: (BOOL)flag completion:(void (^)(void))completion {
-    ToolViewController *vc = [[ToolViewController alloc] init];
+    ToolViewController *vc = [[self alloc] init];
     [vc showWithAnimated:YES completion:nil];
     return vc;
 }
