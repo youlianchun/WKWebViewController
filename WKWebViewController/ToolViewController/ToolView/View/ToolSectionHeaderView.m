@@ -12,6 +12,7 @@
 {
     UILabel *_textLabel;
     UIView *_lLineView, *_rLineView;
+    UIColor *_lineColor;
     
 }
 @end
@@ -41,7 +42,7 @@
         _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _lLineView.translatesAutoresizingMaskIntoConstraints = NO;
         _rLineView.translatesAutoresizingMaskIntoConstraints = NO;
-
+        
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_textLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_textLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_lLineView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
         
@@ -63,6 +64,9 @@
         _lineColor = [UIColor colorWithWhite:220/255.0 alpha:1];
     }
     return _lineColor;
+}
+-(void)setLineColor:(UIColor *)lineColor {
+    _lineColor = lineColor;
 }
 
 +(CGFloat)height {
