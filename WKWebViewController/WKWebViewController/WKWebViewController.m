@@ -226,17 +226,6 @@
     self.webView.backgroundColor = [UIColor whiteColor];
     self.progressView.hidden = YES;
     self.observerEnabled = YES;
-    [[NSNotificationCenter defaultCenter] addObserverForName:nil
-                                                      object:nil
-                                                       queue:nil
-                                                  usingBlock:^(NSNotification* notification) {
-                                                      
-                                                      if ([notification.name isEqualToString:@"AVSystemController_NowPlayingAppIsPlayingDidChangeNotification"]) {
-                                                          NSLog(@"name: %@\n",
-                                                                notification);
-                                                      }
-                                                  }];
-
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
