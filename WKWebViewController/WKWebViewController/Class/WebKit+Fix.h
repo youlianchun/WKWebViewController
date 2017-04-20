@@ -1,6 +1,6 @@
 //
 //  WKWebView+CrashFix.h
-//  WKWebViewController
+//  WKWebViewConteoller
 //
 //  Created by YLCHUN on 2017/3/13.
 //  Copyright © 2017年 ylchun. All rights reserved.

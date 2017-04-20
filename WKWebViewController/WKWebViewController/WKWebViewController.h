@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ScriptMessageManager.h"
+#import "WKWebView+EvaluatingJavaScript.h"
 #import "WebBarView.h"
 
 @interface WKWebViewController : UIViewController
@@ -23,7 +24,7 @@
 
 /**
  GET发起请求
-
+ 
  @param url 请求地址
  @return WKWebViewController
  */
@@ -31,7 +32,7 @@
 
 /**
  POST发起请求
-
+ 
  @param url 请求地址，非网络地址将采用GET方式请求
  @param params 参数，无参数将采用GET方式请求
  @return WKWebViewController
@@ -40,18 +41,24 @@
 
 -(instancetype)init NS_UNAVAILABLE;
 
+
+/**
+ 暂停所有播放器
+ */
 -(void)pausePlayer;
 - (void)loadData;
 - (BOOL)goBack;
 - (BOOL)goForward;
 - (void)reload;
 
+-(void)addUserAgent:(NSString *)userAgent;
+- (void)deleteWebCache;
 @end
 
 @interface WKWebViewController (Realize)
 
 - (NSURL*)willLoadRequestWithUrl:(NSURL*)url;
-    
+
 - (void)javaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame;
 - (void)javaScriptAlertPanelWithMessage:(NSString *)message action:(BOOL)action initiatedByFrame:(WKFrameInfo *)frame;
 - (NSString*)javaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText inputText:(NSString*)inputText initiatedByFrame:(WKFrameInfo *)frame;
@@ -65,5 +72,7 @@
 - (ScriptMessageManager*)scriptMessageManagerWhenWebViewInit;//webView未创建
 - (void)canGoBackChange:(BOOL)canGoBack;
 - (void)canGoForwardChange:(BOOL)canGoForward;
+-(void)willViewDidLoad;
+
 @end
 

@@ -8,7 +8,6 @@
 
 #import "WKWebViewController.h"
 #import "WebProcessPlant.h"
-#import "WKWebView+EvaluatingJavaScript.h"
 #import "JSExport.h"
 #import "PlayerPause.h"
 #import "UIViewController+FullScreen.h"
@@ -127,7 +126,6 @@
     return url;
 }
 
-
 -(WKPreferences *)preferences {
     return self.webView.configuration.preferences;
 }
@@ -179,9 +177,13 @@
             configuration.userContentController = jsmm;
         }
         _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
-        //开启手势触摸
+        //开启手势返回
         _webView.allowsBackForwardNavigationGestures = true;
         _webView.UIDelegate = self;
+        if (([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)) {
+            //3D Touch 9.0之后
+            _webView.allowsLinkPreview = NO;
+        }
         _webView.navigationDelegate = self;
         [self.view insertSubview:_webView atIndex:0];
         _webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -222,6 +224,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    [self willViewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.webView.backgroundColor = [UIColor whiteColor];
     self.progressView.hidden = YES;
@@ -241,6 +244,10 @@
         [self canGoForwardChange:self.webView.canGoForward];
         return;
     }
+}
+
+-(void)pausePlayer{
+    pauseAllPlayer();
 }
 
 -(void)loadData {
@@ -267,7 +274,7 @@
 - (void)loadRequestWithUrl:(NSURL *)url {
     self.urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
     [WebProcessPlant setCookieWithRequest:self.urlRequest];
-//    [self.activityView startAnimating];
+    //    [self.activityView startAnimating];
     if (self.params) {
         self.urlRequest.HTTPMethod = @"POST";
         [self.urlRequest setHTTPBody:[[self postParams] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -311,19 +318,19 @@
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     // 类似UIWebView的 -webViewDidStartLoad:
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-//    [self.activityView startAnimating];
+    //    [self.activityView startAnimating];
     self.progressView.hidden = NO;
     [self didStartProvisionalNavigation:navigation];
 }
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
     [self didCommitNavigation:navigation];
-//    NSLog(@"didCommitNavigation");
+    //    NSLog(@"didCommitNavigation");
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     // 类似 UIWebView 的 －webViewDidFinishLoad:
-//    [self.activityView stopAnimating];
+    //    [self.activityView stopAnimating];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     if (webView.title.length > 0) {
         self.title = webView.title;
@@ -337,7 +344,7 @@
     // 类似 UIWebView 的- webView:didFailLoadWithError:
     NSLog(@"%s : %@",__func__ , error);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//    [self.activityView stopAnimating];
+    //    [self.activityView stopAnimating];
     self.progressView.hidden = YES;
     [self didFailProvisionalNavigation:navigation withError:error];
 }
@@ -374,7 +381,7 @@
             return;
         }
     }
-
+    
     BOOL b = [self decidePolicyForNavigationAction:navigationAction];
     decisionHandler(b);
 }
@@ -398,16 +405,12 @@
 
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
-//    当 WKWebView 总体内存占用过大，页面即将白屏的时候，系统会调用上面的回调函数，我们在该函数里执行[webView reload](这个时候 webView.URL 取值尚不为 nil）解决白屏问题。在一些高内存消耗的页面可能会频繁刷新当前页面，H5侧也要做相应的适配操作。
+    //    当 WKWebView 总体内存占用过大，页面即将白屏的时候，系统会调用上面的回调函数，我们在该函数里执行[webView reload](这个时候 webView.URL 取值尚不为 nil）解决白屏问题。在一些高内存消耗的页面可能会频繁刷新当前页面，H5侧也要做相应的适配操作。
     [webView reload];
 }
 
 
 #pragma mark -
--(void)pausePlayer{
-    pauseAllPlayer();
-}
-
 - (BOOL)goBack {
     if ([self.webView canGoBack]) {
         [self.webView goBack];//-[WKWebView goBack], 回退到上一个页面后不会触发window.onload()函数、不会执行JS。
@@ -453,6 +456,13 @@
     [self pausePlayer];
 }
 
+-(void)addUserAgent:(NSString *)userAgent {
+    [WebProcessPlant addUserAgent:userAgent];
+}
+
+- (void)deleteWebCache {
+    [WebProcessPlant deleteWebCache];
+}
 @end
 
 
@@ -461,10 +471,10 @@
 @implementation WKWebViewController(WKUIDelegate)
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-//    if (!self.isVisible/*UIViewController of WKWebView has finish push or present animation*/) {//控制器还未显示完成
-//        completionHandler();
-//        return;
-//    }
+    //    if (!self.isVisible/*UIViewController of WKWebView has finish push or present animation*/) {//控制器还未显示完成
+    //        completionHandler();
+    //        return;
+    //    }
     // js 里面的alert实现，如果不实现，网页的alert函数无效
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
                                                                              message:nil
@@ -520,9 +530,9 @@
         textField.placeholder = defaultText;
     }];
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定"
-                                              style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                  completionHandler([[alertController.textFields lastObject] text]);
-                                              }]];
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            completionHandler([[alertController.textFields lastObject] text]);
+                                                        }]];
     
     if (self.isVisible){//控制器不在显示时候不进行弹出操作
         [self presentViewController:alertController animated:YES completion:^{}];
@@ -550,7 +560,7 @@
 - (void)canGoBackChange:(BOOL)canGoBack{}
 - (void)canGoForwardChange:(BOOL)canGoForward{}
 
-
+-(void)willViewDidLoad{}
 @end
 
 

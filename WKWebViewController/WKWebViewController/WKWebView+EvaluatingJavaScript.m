@@ -74,7 +74,8 @@ null	NSNul
 
 -(id)evaluateJSFunc:(NSString*)func arguments:(NSArray*)arguments {
     NSString *paramsJSON = [EvaluatingJavaScript argumentsJS:arguments];
-    NSString *jsString = [NSString stringWithFormat:@"%@(%@)", func, paramsJSON];
+    
+    NSString *jsString = [NSString stringWithFormat:@"%@('%@')", func, paramsJSON];
     
     __block id retuenValue;
     

@@ -45,8 +45,8 @@
     paramsJSON = [paramsJSON stringByReplacingOccurrencesOfString:@"\u2028" withString:@"\\u2028"];
     paramsJSON = [paramsJSON stringByReplacingOccurrencesOfString:@"\u2029" withString:@"\\u2029"];
     return paramsJSON;
-
-
+    
+    
 };
 
 + (NSString*)convertToJSONData:(id)dictOrArr {

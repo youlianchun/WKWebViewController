@@ -17,4 +17,5 @@
 
 +(void)addUserAgent:(NSString *)userAgent;
 
++ (void)deleteWebCache;
 @end

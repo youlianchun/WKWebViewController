@@ -1,6 +1,6 @@
 //
 //  WKWebView+CrashFix.m
-//  WKWebViewController
+//  WKWebViewConteoller
 //
 //  Created by YLCHUN on 2017/3/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
@@ -30,8 +30,8 @@
  执行JS代码的情况下。WKWebView 退出并被释放后导致completionHandler变成野指针，而此时 javaScript Core 还在执行JS代码，待 javaScript Core 执行完毕后会调用completionHandler()，导致 crash。这个 crash 只发生在 iOS 8 系统上，参考Apple Open Source，在iOS9及以后系统苹果已经修复了这个bug
  */
 +(void)fixEvaluateJavaScriptCrash {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_9_0
-//    if (([[[UIDevice currentDevice] systemVersion] doubleValue] <= 9.0)) {
+//#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_9_0
+    if (([[[UIDevice currentDevice] systemVersion] doubleValue] < 9.0)) {
         Class class = [self class];
         SEL originalSelector = @selector(evaluateJavaScript:completionHandler:);
         SEL swizzledSelector = @selector(fix_evaluateJavaScript:completionHandler:);
@@ -43,8 +43,8 @@
         } else {
             method_exchangeImplementations(originalMethod, swizzledMethod);
         }
-//    }
-#endif
+    }
+//#endif
 }
 - (void)fix_evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler {
     id strongSelf = self;
@@ -139,6 +139,8 @@ BOOL fix_secureTextEntryIMP(id sender, SEL cmd) {
                                     }\
                                     document.body.appendChild(form);\
                                     form.submit();", url, params];
+        //        __block id result = nil;
+        //        __block BOOL isExecuted = NO;
         __weak typeof(self) wself = self;
         [self evaluateJavaScript:postJavaScript completionHandler:^(id object, NSError * _Nullable error) {
             if (error && [wself.navigationDelegate respondsToSelector:@selector(webView:didFailProvisionalNavigation:withError:)]) {
@@ -146,7 +148,12 @@ BOOL fix_secureTextEntryIMP(id sender, SEL cmd) {
                     [wself.navigationDelegate webView:wself didFailProvisionalNavigation:nil withError:error];
                 });
             }
+            //            result = object;
+            //            isExecuted = YES;
         }];
+        //        while (isExecuted == NO) {
+        //            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        //        }
         return nil;
     }else{
         return [self fix_loadRequest:request];

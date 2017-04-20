@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class WKWebView;
+#import <WebKit/WebKit.h>
 
 typedef void(^JSExportCallBack) (id object);
 
@@ -26,6 +26,12 @@ typedef void(^JSExportCallBack) (id object);
 
 @end
 
+@interface WKWebView (JavaScript)
+
+-(id)jsFunc:(NSString*)func arguments:(NSArray*)arguments;
+
+@end
+
 @interface JSExportModel : NSObject
 
 
@@ -40,5 +46,7 @@ typedef void(^JSExportCallBack) (id object);
 @property (nonatomic, weak, readonly) WKWebView *webView;
 
 -(instancetype)initWithSpaceName:(NSString*)name;
+
+- (id)unserializeJSON:(NSString *)jsonString toStringValue:(BOOL)toStringValue;
 
 @end

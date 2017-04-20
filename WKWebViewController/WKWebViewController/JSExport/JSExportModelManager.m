@@ -49,7 +49,7 @@
     WKUserScript *userScript = self.jsExportCodeDict[spaceName];
     if (!userScript) {
         NSString *javaScriptSource = [JSExportModel jsExportCodeWithModel:handler];
-        userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];// forMainFrameOnly:NO(全局窗口)，yes（只限主窗口）
+        userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];// forMainFrameOnly:NO(全局窗口)，yes（只限主窗口）
         self.jsExportCodeDict[spaceName] = userScript;
         self.scriptModelDict[spaceName] = handler;
     }
@@ -74,7 +74,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *javaScriptSource = [JSExportModel jsExportCallBackCode];
-        userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];// forMainFrameOnly:NO(全局窗口)，yes（只限主窗口）
+        userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];// forMainFrameOnly:NO(全局窗口)，yes（只限主窗口）
     });
     return userScript;
 }

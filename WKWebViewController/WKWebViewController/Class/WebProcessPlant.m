@@ -8,6 +8,7 @@
 
 #import "WebProcessPlant.h"
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 @implementation WebProcessPlant
 +(NSString* )urlEncoding:(NSString *)url {
@@ -62,9 +63,69 @@
     }
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    if ([oldAgent containsString:userAgent]) {
+        return;
+    }
     NSString *newAgent = [oldAgent stringByAppendingFormat:@" %@", tmpStr];
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
 }
 
+
++ (void)deleteWebCache {
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
+//        NSSet *websiteDataTypes = [NSSet setWithArray:@[
+////                                                        磁盘缓存
+//                                                        WKWebsiteDataTypeDiskCache,
+//                                                        
+////                                                        离线APP缓存
+//                                                        //WKWebsiteDataTypeOfflineWebApplicationCache,
+//                                                        
+////                                                        内存缓存
+//                                                        WKWebsiteDataTypeMemoryCache,
+//                                                        
+////                                                        web LocalStorage 缓存
+//                                                        //WKWebsiteDataTypeLocalStorage,
+//                                                        
+////                                                        web Cookies缓存
+//                                                        //WKWebsiteDataTypeCookies,
+//                                                        
+////                                                        SessionStorage 缓存
+//                                                        //WKWebsiteDataTypeSessionStorage,
+//                                                        
+////                                                        索引DB缓存
+//                                                        //WKWebsiteDataTypeIndexedDBDatabases,
+//                                                        
+////                                                        数据库缓存
+//                                                        //WKWebsiteDataTypeWebSQLDatabases
+//                                                        
+//                                                        ]];
+        //// All kinds of data
+        NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        
+        //// Date from
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        
+        //// Execute
+        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+            
+            // Done
+            
+        }];
+    } else {
+        
+        NSString *libraryDir = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, YES)[0];
+        NSString *bundleId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+
+        NSString *cookiesFolderPath = [NSString stringWithFormat:@"%@/Cookies",libraryDir];
+        NSString *webkitFolderInLib = [NSString stringWithFormat:@"%@/WebKit",libraryDir];
+        NSString *webKitFolderInCaches = [NSString stringWithFormat:@"%@/Caches/%@/WebKit",libraryDir,bundleId];
+        NSError *error;
+        [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:webKitFolderInCaches error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:webkitFolderInLib error:&error];
+        
+    }
+    
+}
 @end

@@ -7,10 +7,13 @@
 //
 
 #import "JSExportModel.h"
-#import <WebKit/WebKit.h>
 #import <objc/runtime.h>
 
 @implementation WKWebView (JavaScript)
+
+-(id)jsFunc:(NSString*)func arguments:(NSArray*)arguments {
+    return [self callJSFunc:func arguments:arguments];
+}
 
 -(id)callJSFunc:(NSString*)func arguments:(NSArray*)arguments {
     NSString *paramsJSON = [self argumentsJSON:arguments];
@@ -28,7 +31,7 @@
 }
 
 -(NSString*)argumentsJSON:(NSArray*)arguments {
-    NSString *paramsJSON = [self serializeMessageToJSONData:arguments];
+    NSString *paramsJSON = [self serializeMessageToJSON:arguments];
     NSRange range= NSMakeRange(1,paramsJSON.length-2);
     paramsJSON = [paramsJSON substringWithRange:range];
     paramsJSON = [paramsJSON stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
@@ -42,7 +45,7 @@
     return paramsJSON;
 }
 
-- (NSString*)serializeMessageToJSONData:(id)dictOrArr {
+- (NSString*)serializeMessageToJSON:(id)dictOrArr {
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictOrArr
                                                        options:0 // Pass 0 if you don't care about the readability of the generated string
@@ -108,6 +111,79 @@ typedef NS_ENUM(NSUInteger, _JSExportMethodType) {
     }
     return self;
 }
+
+
+-(NSDictionary*)stringDictWithDict:(NSDictionary*)dict {
+    NSMutableDictionary *resDict = [NSMutableDictionary dictionary];
+    NSArray * allKeys = [dict allKeys];
+    for (id key in allKeys) {
+        id value = dict[key];
+        if ([value isKindOfClass:[NSNumber class]]) {
+            value = ((NSNumber*)value).description;
+        }else
+            if ([value isKindOfClass:[NSDictionary class]]) {
+                value = [self stringDictWithDict:value];
+            }else
+                if ([value isKindOfClass:[NSArray class]]) {
+                    value = [self stringArrWithArr:value];
+                }else
+                    if ([value isEqualToString:@"<null>"]) {
+                        value = @"";
+                    }
+        resDict[key] = value;
+    }
+    return resDict;
+}
+
+-(NSArray *)stringArrWithArr:(NSArray*)arr {
+    NSMutableArray *resArr = [NSMutableArray arrayWithCapacity:arr.count];
+    for (long i = 0; i<arr.count; i++) {
+        id value = arr[i];
+        if ([value isKindOfClass:[NSNumber class]]) {
+            value = ((NSNumber*)value).description;
+        }else
+            if ([value isKindOfClass:[NSDictionary class]]) {
+                value = [self stringDictWithDict:value];
+            }else
+                if ([value isKindOfClass:[NSArray class]]) {
+                    value = [self stringArrWithArr:value];
+                }else
+                    if ([value isEqualToString:@"<null>"]) {
+                        value = @"";
+                    }
+        resArr[i] = value;
+    }
+    return resArr;
+}
+
+- (id)unserializeJSON:(NSString *)jsonString toStringValue:(BOOL)toStringValue{
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    if (!jsonData) {
+        return nil;
+    }
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                    options:NSJSONReadingAllowFragments
+                                                      error:&error];
+    
+    if (jsonObject != nil && error == nil){
+        if (toStringValue) {
+            if ([jsonObject isKindOfClass:[NSArray class]]) {
+                jsonObject = [self stringArrWithArr:jsonObject];
+            }
+            if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                jsonObject = [self stringDictWithDict:jsonObject];
+            }
+        }
+        return jsonObject;
+    }else{
+        NSLog(@"unserializeJSON: %@ \n\neror: %@",jsonString, error.description);
+        // 解析错误
+        return nil;
+    }
+}
+
+#pragma mark - classMethods
 
 +(NSArray*)jsExportMethodsWithModel:(JSExportModel<JSExportProtocol>*)model {
     Protocol *jsProtocol = @protocol(JSExportProtocol);
