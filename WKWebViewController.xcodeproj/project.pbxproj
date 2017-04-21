@@ -251,7 +251,6 @@
 				A9FDFF181E8221E400526A22 /* PlayerPause */,
 				A93FD6E01E7AA4B800C66C2F /* Class */,
 				A93FD6ED1E7AA4B800C66C2F /* JSExport */,
-				A93FD6F31E7AA4B800C66C2F /* JSExportModel */,
 				A93FD6F41E7AA4B800C66C2F /* ScriptMessageManager.h */,
 				A93FD6F51E7AA4B800C66C2F /* ScriptMessageManager.m */,
 				A93FD6F61E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.h */,
@@ -291,13 +290,6 @@
 				A93FD6F21E7AA4B800C66C2F /* JSExportModelManager.m */,
 			);
 			path = JSExport;
-			sourceTree = "<group>";
-		};
-		A93FD6F31E7AA4B800C66C2F /* JSExportModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = JSExportModel;
 			sourceTree = "<group>";
 		};
 		A9FDFF181E8221E400526A22 /* PlayerPause */ = {
