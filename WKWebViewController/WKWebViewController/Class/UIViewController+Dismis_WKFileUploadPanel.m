@@ -71,6 +71,7 @@
         UIDocumentMenuViewController *dvc = (UIDocumentMenuViewController*)viewControllerToPresent;
         if ([dvc.delegate isKindOfClass:NSClassFromString(@"WKFileUploadPanel")]) {
             self.WKFileUploadPanelFlag = YES;
+            dvc.WKFileUploadPanelFlag = YES;
         }
     }
     [self _presentViewController:viewControllerToPresent animated:flag completion:completion];
