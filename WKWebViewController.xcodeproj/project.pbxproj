@@ -39,6 +39,7 @@
 		A93FD7131E7AA68800C66C2F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7101E7AA68800C66C2F /* index.html */; };
 		A93FD7141E7AA68800C66C2F /* ocModel.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7111E7AA68800C66C2F /* ocModel.html */; };
 		A93FD7151E7AA68800C66C2F /* webKit.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7121E7AA68800C66C2F /* webKit.html */; };
+		A95C01DB1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = A95C01DA1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m */; };
 		A9DBAA8D1E88B4F6005C8D7D /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = A9DBAA8C1E88B4F6005C8D7D /* back.png */; };
 		A9FDFF1B1E8221FA00526A22 /* PlayerPause.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */; };
 /* End PBXBuildFile section */
@@ -104,6 +105,8 @@
 		A93FD7101E7AA68800C66C2F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A93FD7111E7AA68800C66C2F /* ocModel.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ocModel.html; sourceTree = "<group>"; };
 		A93FD7121E7AA68800C66C2F /* webKit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = webKit.html; sourceTree = "<group>"; };
+		A95C01D91EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Dismis_WKFileUploadPanel.h"; sourceTree = "<group>"; };
+		A95C01DA1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Dismis_WKFileUploadPanel.m"; sourceTree = "<group>"; };
 		A9DBAA8C1E88B4F6005C8D7D /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		A9FDFF191E8221FA00526A22 /* PlayerPause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPause.h; sourceTree = "<group>"; };
 		A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPause.m; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 		A93FD6E01E7AA4B800C66C2F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				A95C01D91EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.h */,
+				A95C01DA1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m */,
 				A93FD6E11E7AA4B800C66C2F /* EvaluatingJavaScript.h */,
 				A93FD6E21E7AA4B800C66C2F /* EvaluatingJavaScript.m */,
 				A93FD6E31E7AA4B800C66C2F /* ScriptMessageHandler.h */,
@@ -382,6 +387,7 @@
 				A93FD7041E7AA4B800C66C2F /* WebViewController.m in Sources */,
 				A93FD6B11E7AA44E00C66C2F /* AppDelegate.m in Sources */,
 				A93FD7011E7AA4B800C66C2F /* ToolViewController.m in Sources */,
+				A95C01DB1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m in Sources */,
 				A93FD7071E7AA4B800C66C2F /* UIApplication+UIOrientation.m in Sources */,
 				A93FD7081E7AA4B800C66C2F /* WebBarView.m in Sources */,
 				A93FD70B1E7AA4B800C66C2F /* JSExportModel.m in Sources */,
