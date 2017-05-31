@@ -21,6 +21,7 @@
 
 @property (nonatomic, readonly) WKPreferences *preferences;
 
+@property (nonatomic, assign) BOOL backEnabled;
 
 /**
  GET发起请求

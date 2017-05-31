@@ -31,8 +31,6 @@
 		A93FD7081E7AA4B800C66C2F /* WebBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6E81E7AA4B800C66C2F /* WebBarView.m */; };
 		A93FD7091E7AA4B800C66C2F /* WebKit+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6EA1E7AA4B800C66C2F /* WebKit+Fix.m */; };
 		A93FD70A1E7AA4B800C66C2F /* WebProcessPlant.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6EC1E7AA4B800C66C2F /* WebProcessPlant.m */; };
-		A93FD70B1E7AA4B800C66C2F /* JSExportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6F01E7AA4B800C66C2F /* JSExportModel.m */; };
-		A93FD70C1E7AA4B800C66C2F /* JSExportModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6F21E7AA4B800C66C2F /* JSExportModelManager.m */; };
 		A93FD70D1E7AA4B800C66C2F /* ScriptMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6F51E7AA4B800C66C2F /* ScriptMessageManager.m */; };
 		A93FD70E1E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6F71E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.m */; };
 		A93FD70F1E7AA4B800C66C2F /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FD6F91E7AA4B800C66C2F /* WKWebViewController.m */; };
@@ -41,6 +39,7 @@
 		A93FD7151E7AA68800C66C2F /* webKit.html in Resources */ = {isa = PBXBuildFile; fileRef = A93FD7121E7AA68800C66C2F /* webKit.html */; };
 		A95C01DB1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = A95C01DA1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m */; };
 		A9DBAA8D1E88B4F6005C8D7D /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = A9DBAA8C1E88B4F6005C8D7D /* back.png */; };
+		A9F0C6B11EDEC280006E8613 /* JSTrade.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F0C6B01EDEC280006E8613 /* JSTrade.framework */; };
 		A9FDFF1B1E8221FA00526A22 /* PlayerPause.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */; };
 /* End PBXBuildFile section */
 
@@ -91,11 +90,6 @@
 		A93FD6EA1E7AA4B800C66C2F /* WebKit+Fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebKit+Fix.m"; sourceTree = "<group>"; };
 		A93FD6EB1E7AA4B800C66C2F /* WebProcessPlant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebProcessPlant.h; sourceTree = "<group>"; };
 		A93FD6EC1E7AA4B800C66C2F /* WebProcessPlant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebProcessPlant.m; sourceTree = "<group>"; };
-		A93FD6EE1E7AA4B800C66C2F /* JSExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSExport.h; sourceTree = "<group>"; };
-		A93FD6EF1E7AA4B800C66C2F /* JSExportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSExportModel.h; sourceTree = "<group>"; };
-		A93FD6F01E7AA4B800C66C2F /* JSExportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSExportModel.m; sourceTree = "<group>"; };
-		A93FD6F11E7AA4B800C66C2F /* JSExportModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSExportModelManager.h; sourceTree = "<group>"; };
-		A93FD6F21E7AA4B800C66C2F /* JSExportModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSExportModelManager.m; sourceTree = "<group>"; };
 		A93FD6F41E7AA4B800C66C2F /* ScriptMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptMessageManager.h; sourceTree = "<group>"; };
 		A93FD6F51E7AA4B800C66C2F /* ScriptMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptMessageManager.m; sourceTree = "<group>"; };
 		A93FD6F61E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+EvaluatingJavaScript.h"; sourceTree = "<group>"; };
@@ -108,6 +102,7 @@
 		A95C01D91EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Dismis_WKFileUploadPanel.h"; sourceTree = "<group>"; };
 		A95C01DA1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Dismis_WKFileUploadPanel.m"; sourceTree = "<group>"; };
 		A9DBAA8C1E88B4F6005C8D7D /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		A9F0C6B01EDEC280006E8613 /* JSTrade.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSTrade.framework; sourceTree = "<group>"; };
 		A9FDFF191E8221FA00526A22 /* PlayerPause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPause.h; sourceTree = "<group>"; };
 		A9FDFF1A1E8221FA00526A22 /* PlayerPause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPause.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9F0C6B11EDEC280006E8613 /* JSTrade.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +131,7 @@
 		A93FD6A01E7AA44E00C66C2F = {
 			isa = PBXGroup;
 			children = (
+				A9F0C6B01EDEC280006E8613 /* JSTrade.framework */,
 				A93FD6AB1E7AA44E00C66C2F /* WKWebViewController */,
 				A93FD6AA1E7AA44E00C66C2F /* Products */,
 			);
@@ -253,7 +250,6 @@
 			children = (
 				A9FDFF181E8221E400526A22 /* PlayerPause */,
 				A93FD6E01E7AA4B800C66C2F /* Class */,
-				A93FD6ED1E7AA4B800C66C2F /* JSExport */,
 				A93FD6F41E7AA4B800C66C2F /* ScriptMessageManager.h */,
 				A93FD6F51E7AA4B800C66C2F /* ScriptMessageManager.m */,
 				A93FD6F61E7AA4B800C66C2F /* WKWebView+EvaluatingJavaScript.h */,
@@ -283,18 +279,6 @@
 				A93FD6EC1E7AA4B800C66C2F /* WebProcessPlant.m */,
 			);
 			path = Class;
-			sourceTree = "<group>";
-		};
-		A93FD6ED1E7AA4B800C66C2F /* JSExport */ = {
-			isa = PBXGroup;
-			children = (
-				A93FD6EE1E7AA4B800C66C2F /* JSExport.h */,
-				A93FD6EF1E7AA4B800C66C2F /* JSExportModel.h */,
-				A93FD6F01E7AA4B800C66C2F /* JSExportModel.m */,
-				A93FD6F11E7AA4B800C66C2F /* JSExportModelManager.h */,
-				A93FD6F21E7AA4B800C66C2F /* JSExportModelManager.m */,
-			);
-			path = JSExport;
 			sourceTree = "<group>";
 		};
 		A9FDFF181E8221E400526A22 /* PlayerPause */ = {
@@ -390,9 +374,7 @@
 				A95C01DB1EB82B5700437138 /* UIViewController+Dismis_WKFileUploadPanel.m in Sources */,
 				A93FD7071E7AA4B800C66C2F /* UIApplication+UIOrientation.m in Sources */,
 				A93FD7081E7AA4B800C66C2F /* WebBarView.m in Sources */,
-				A93FD70B1E7AA4B800C66C2F /* JSExportModel.m in Sources */,
 				A93FD7021E7AA4B800C66C2F /* OCModel.m in Sources */,
-				A93FD70C1E7AA4B800C66C2F /* JSExportModelManager.m in Sources */,
 				A93FD7001E7AA4B800C66C2F /* ToolSectionView.m in Sources */,
 				A93FD70F1E7AA4B800C66C2F /* WKWebViewController.m in Sources */,
 				A93FD6FF1E7AA4B800C66C2F /* ToolSectionHeaderView.m in Sources */,
@@ -532,6 +514,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5ATRCX89M9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WKWebViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsports.ylchun.WKWebViewController;
@@ -544,6 +530,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5ATRCX89M9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WKWebViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsports.ylchun.WKWebViewController;

@@ -23,6 +23,7 @@ BOOL fs_swizzleClassMethod(Class class, SEL originalSelector, SEL swizzledSelect
     return success;
 }
 
+
 #pragma mark - UIViewController
 @implementation UIViewController (FullScreen)
 
@@ -62,8 +63,7 @@ BOOL fs_swizzleClassMethod(Class class, SEL originalSelector, SEL swizzledSelect
 
 @end
 
-
-#pragma mark - PopGestureRecognizer
+#pragma mark - _FullScreenPopGestureRecognizer
 @interface _FullScreenPopGestureRecognizer : UIScreenEdgePanGestureRecognizer
 @property (nonatomic, readwrite, weak) id<UIGestureRecognizerDelegate> receiver;
 @property (nonatomic, readwrite, weak) UINavigationController* navigationController;
@@ -82,7 +82,11 @@ BOOL fs_swizzleClassMethod(Class class, SEL originalSelector, SEL swizzledSelect
 -(void)setDelegate:(id<UIGestureRecognizerDelegate>)delegate {
     id<UIGestureRecognizerDelegate> delegateSelf = (id<UIGestureRecognizerDelegate>)self;
     if (delegateSelf != delegate) {
-        self.receiver = delegate;
+        if (delegate == nil) {
+            self.receiver = self.navigationController.interactivePopGestureRecognizer.delegate;
+        }else{
+            self.receiver = delegate;
+        }
     }
     [super setDelegate:delegateSelf];
 }
@@ -170,4 +174,3 @@ BOOL fs_swizzleClassMethod(Class class, SEL originalSelector, SEL swizzledSelect
 }
 
 @end
-

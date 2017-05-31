@@ -1,39 +1,38 @@
 //
 //  JSExportModel.h
-//  WKWebView_JSExport
+//  JSTrade
 //
 //  Created by YLCHUN on 2017/3/14.
 //  Copyright © 2017年 ylchun. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <WebKit/WebKit.h>
+#import "JSImport.h"
 
-typedef void(^JSExportCallBack) (id object);
+#define JSExportAs(PropertyName, Selector) \
+@optional Selector __JS_EXPORT_AS__##PropertyName:(id)argument NS_UNAVAILABLE; @required Selector
 
 /**
  JSExportProtocol 
  多个JSExportProtocol协议只支持第一个
- 函数最多 一个object参数 和 一个callBack返回值
+ 函数最多 一个callBack返回值，且为最后一个参数
  */
 @protocol JSExportProtocol <NSObject>
-
-//接受的四种函数格式
 //-(void)func0;                                 //window.<#spaceName#>.func0();
 //-(void)func1:(id)p;                           //window.<#spaceName#>.func1(<#param#>);
 //-(void)func2:(JSExportCallBack)cb;            //window.<#spaceName#>.func2(function(param){});
 //-(void)func3:(id)p cb:(JSExportCallBack)cb;   //window.<#spaceName#>.func3(<#param#>, function(param){});
 
+//      JSExportAs(doFoo,
+//           - (void)doFoo:(id)foo withBar:(id)bar
+//           );//window.<#spaceName#>.doFoo(foo,bar);
 @end
 
-@interface WKWebView (JavaScript)
+@class WKWebView;
 
--(id)jsFunc:(NSString*)func arguments:(NSArray*)arguments;
-
-@end
+typedef void(^JSExportCallBack) (id object);
 
 @interface JSExportModel : NSObject
-
 
 /**
  js调用代码 window.<#spaceName#>.func()
@@ -48,5 +47,12 @@ typedef void(^JSExportCallBack) (id object);
 -(instancetype)initWithSpaceName:(NSString*)name;
 
 - (id)unserializeJSON:(NSString *)jsonString toStringValue:(BOOL)toStringValue;
+
+/**
+ 由子类实现，不需要执行super方法，不建议直接调用
+
+ @return jsImportModels
+ */
+-(NSArray <JSImportModel<JSImportProtocol> *> *)jsImportModels;
 
 @end

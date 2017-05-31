@@ -8,7 +8,7 @@
 
 #import "WKWebViewController.h"
 #import "WebProcessPlant.h"
-#import "JSExport.h"
+#import <JSTrade/JSTrade.h>
 #import "PlayerPause.h"
 #import "UIViewController+FullScreen.h"
 
@@ -99,6 +99,7 @@
     self.urlRequest = nil;
     self.url = nil;
     self.webView = nil;
+    self.navigationController.popGestureRecognizer.delegate = nil;
 }
 
 #pragma mark - GET SET
@@ -115,6 +116,16 @@
 //    }
 //    return _activityView;
 //}
+
+-(void)setBackEnabled:(BOOL)backEnabled {
+    _backEnabled = backEnabled;
+    _webView.allowsBackForwardNavigationGestures = backEnabled;
+    if (backEnabled) {
+        self.navigationController.popGestureRecognizer.delegate = nil;
+    }else{
+        self.navigationController.popGestureRecognizer.delegate = self;
+    }
+}
 
 -(NSURL *)currentURL {
     NSURL *url;
@@ -178,7 +189,8 @@
         }
         _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
         //开启手势返回
-        _webView.allowsBackForwardNavigationGestures = true;
+        _webView.allowsBackForwardNavigationGestures = self.backEnabled;
+//        _webView.allowsBackForwardNavigationGestures = true;
         _webView.UIDelegate = self;
         if (([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)) {
             //3D Touch 9.0之后
@@ -213,11 +225,17 @@
 }
 
 -(BOOL)canGoBack {
-    return _webView.canGoBack;
+    if (self.backEnabled) {
+        return _webView.canGoBack;
+    }
+    return NO;
 }
 
 -(BOOL)canGoForward {
-    return _webView.canGoForward;
+    if (self.backEnabled) {
+        return _webView.canGoForward;
+    }
+    return NO;
 }
 
 #pragma mark -
@@ -229,6 +247,7 @@
     self.webView.backgroundColor = [UIColor whiteColor];
     self.progressView.hidden = YES;
     self.observerEnabled = YES;
+    self.backEnabled = NO;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
@@ -236,11 +255,11 @@
         self.progressView.progress = self.webView.estimatedProgress;
         return;
     }
-    if ([keyPath isEqualToString:kWebViewCanGoBack]) {
+    if ([keyPath isEqualToString:kWebViewCanGoBack]&&self.backEnabled) {
         [self canGoBackChange:self.webView.canGoBack];
         return;
     }
-    if ([keyPath isEqualToString:kWebViewCanGoForward]) {
+    if ([keyPath isEqualToString:kWebViewCanGoForward]&&self.backEnabled) {
         [self canGoForwardChange:self.webView.canGoForward];
         return;
     }

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JSExport.h"
+#import <JSTrade/JSTrade.h>
 
 @protocol OCModelProtocol <JSExportProtocol>
 
