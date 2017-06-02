@@ -9,7 +9,7 @@
 #define FOUNDATION_IMPORT_JSTRADE void import_JSTrade();\
 __attribute__((used)) static void importJSTrade () {\
     import_JSTrade();\
-}
+} NS_UNAVAILABLE
 
 #import "JSExport.h"
 #import "JSImport.h"
